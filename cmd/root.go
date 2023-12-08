@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/jfpferreira/adventofcode23/cmd/day1"
+	"github.com/jfpferreira/adventofcode23/cmd/day2"
 	"github.com/spf13/cobra"
 )
 
@@ -17,6 +18,7 @@ var rootCmd = &cobra.Command{
 
 func Execute()  {
 	day1.AddCommands(rootCmd)
+	day2.AddCommands(rootCmd)
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
