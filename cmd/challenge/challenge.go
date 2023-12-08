@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"path/filepath"
 	"runtime"
+	"time"
 
 	"github.com/spf13/cobra"
-	"github.com/bradhe/stopwatch"
 )
 
 type DaySolution struct {
@@ -41,12 +41,11 @@ func (solution *DaySolution) AddDaySolutions(rootCmd *cobra.Command) {
 func runDay(day int, solve func([]string) string) func(*cobra.Command, []string) {
 	return func (_ *cobra.Command, _ []string) {
 		input := loadInput(day)
-		stopwatch := stopwatch.Start()
+		start := time.Now()
 	
 		result := solve(input)
-		stopwatch.Stop()
-	
-		fmt.Printf("Total elapsed time(ms) is: %v\n", stopwatch.Milliseconds())
+
+		fmt.Printf("Total elapsed time(ms) is: %d\n", time.Since(start).Milliseconds())
 		fmt.Printf("Result: %s\n", result)
 	}
 }
@@ -60,6 +59,8 @@ func loadInput(day int) []string{
 	path := filepath.Dir(callingFile)
 	path = filepath.Dir(path)
 	path = filepath.Join(path, fmt.Sprintf("day%d", day))
+	path = filepath.Join(path, "input.txt")
+	fmt.Println(path)
 
 	inputFile, err := os.Open(path)
 	if err != nil {
